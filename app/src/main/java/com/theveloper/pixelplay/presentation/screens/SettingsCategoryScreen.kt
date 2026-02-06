@@ -617,19 +617,11 @@ fun SettingsCategoryScreen(
                                     onCheckedChange = { settingsViewModel.setTapBackgroundClosesPlayer(it) },
                                     leadingIcon = { Icon(painterResource(R.drawable.rounded_touch_app_24), null, tint = MaterialTheme.colorScheme.secondary) }
                                 )
-                                SwitchSettingItem(
-                                    title = "Haptic feedback",
-                                    subtitle = "Enable vibration feedback across the app.",
-                                    checked = uiState.hapticsEnabled,
-                                    onCheckedChange = { settingsViewModel.setHapticsEnabled(it) },
-                                    leadingIcon = { Icon(painterResource(R.drawable.rounded_touch_app_24), null, tint = MaterialTheme.colorScheme.secondary) }
-                                )
                             }
                         }
                         SettingsCategory.BEHAVIOR -> {
                             SettingsSubsection(
-                                title = "Folders",
-                                addBottomSpace = false
+                                title = "Folders"
                             ) {
                                 SwitchSettingItem(
                                     title = "Back gesture controls folders",
@@ -643,6 +635,18 @@ fun SettingsCategoryScreen(
                                             tint = MaterialTheme.colorScheme.secondary
                                         )
                                     }
+                                )
+                            }
+                            SettingsSubsection(
+                                title = "Haptics",
+                                addBottomSpace = false
+                            ) {
+                                SwitchSettingItem(
+                                    title = "Haptic feedback",
+                                    subtitle = "Enable vibration feedback across the app.",
+                                    checked = uiState.hapticsEnabled,
+                                    onCheckedChange = { settingsViewModel.setHapticsEnabled(it) },
+                                    leadingIcon = { Icon(painterResource(R.drawable.rounded_touch_app_24), null, tint = MaterialTheme.colorScheme.secondary) }
                                 )
                             }
                         }

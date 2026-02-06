@@ -38,7 +38,7 @@ enum class SettingsCategory(
     BEHAVIOR(
         id = "behavior",
         title = "Behavior",
-        subtitle = "Gestures and navigation behavior",
+        subtitle = "Gestures, haptics, and navigation behavior",
         iconRes = R.drawable.rounded_touch_app_24
     ),
     AI_INTEGRATION(
