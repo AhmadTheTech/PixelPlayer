@@ -11,10 +11,17 @@ interface SongRepository {
     fun getSongsByArtist(artistId: Long): Flow<List<Song>>
     suspend fun searchSongs(query: String): List<Song>
     fun getSongById(songId: Long): Flow<Song?>
-    fun getPaginatedSongs(sortOption: com.theveloper.pixelplay.data.model.SortOption): Flow<PagingData<Song>>
+    fun getPaginatedSongs(sortOption: com.theveloper.pixelplay.data.model.SortOption, storageFilter: com.theveloper.pixelplay.data.model.StorageFilter): Flow<PagingData<Song>>
     @OptIn(ExperimentalCoroutinesApi::class)
     fun getPaginatedSongs(): Flow<PagingData<Song>>
-    fun getPaginatedFavoriteSongs(sortOption: com.theveloper.pixelplay.data.model.SortOption): Flow<PagingData<Song>>
-    suspend fun getFavoriteSongsOnce(): List<Song>
-    fun getFavoriteSongCountFlow(): Flow<Int>
+    fun getPaginatedFavoriteSongs(
+        sortOption: com.theveloper.pixelplay.data.model.SortOption,
+        storageFilter: com.theveloper.pixelplay.data.model.StorageFilter
+    ): Flow<PagingData<Song>>
+    suspend fun getFavoriteSongsOnce(
+        storageFilter: com.theveloper.pixelplay.data.model.StorageFilter
+    ): List<Song>
+    fun getFavoriteSongCountFlow(
+        storageFilter: com.theveloper.pixelplay.data.model.StorageFilter
+    ): Flow<Int>
 }

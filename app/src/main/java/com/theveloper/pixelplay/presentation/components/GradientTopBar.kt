@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack
@@ -14,6 +15,8 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilledIconButton
 import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.Icon
+import androidx.compose.material.icons.filled.Warning
+import androidx.compose.material.icons.rounded.Cloud
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.LargeTopAppBar
@@ -92,6 +95,7 @@ fun HomeGradientTopBar(
     onNavigationIconClick: () -> Unit,
     onMoreOptionsClick: () -> Unit,
     onBetaClick: () -> Unit,
+    onTelegramClick: () -> Unit,
     onMenuClick: () -> Unit = {},
 ) {
     // 1) Pinta la status bar con el color surface
@@ -166,9 +170,22 @@ fun HomeGradientTopBar(
         actions = {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
-                //horizontalArrangement = Arrangement.spacedBy(6.dp),
+                //horizontalArrangement = Arrangement.spacedBy(2.dp),
                 modifier = Modifier.padding(end = 14.dp)
             ) {
+                FilledIconButton(
+                    colors = IconButtonDefaults.filledIconButtonColors(
+                        containerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
+                        contentColor = MaterialTheme.colorScheme.onSurface
+                    ),
+                    onClick = onTelegramClick
+                ) {
+                    Icon(
+                         imageVector = Icons.Rounded.Cloud,
+                         contentDescription = "Telegram"
+                    )
+                }
+                //Spacer(Modifier.size(8.dp))
                 FilledIconButton(
                     colors = IconButtonDefaults.filledIconButtonColors(
                         containerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
@@ -177,11 +194,12 @@ fun HomeGradientTopBar(
                     onClick = onMoreOptionsClick
                 ) {
                     Icon(
-                        modifier = Modifier.size(18.dp),
+                        //modifier = Modifier.size(18.dp),
                         painter = painterResource(R.drawable.round_newspaper_24),
                         contentDescription = "Changelog"
                     )
                 }
+                //Spacer(Modifier.size(8.dp))
                 FilledIconButton(
                     colors = IconButtonDefaults.filledIconButtonColors(
                         containerColor = MaterialTheme.colorScheme.surfaceContainerHigh,

@@ -473,6 +473,33 @@ fun AppNavigation(
                     )
                 }
             }
+            composable(
+                Screen.DeviceCapabilities.route,
+                enterTransition = { enterTransition() },
+                exitTransition = { exitTransition() },
+                popEnterTransition = { popEnterTransition() },
+                popExitTransition = { popExitTransition() },
+            ) {
+                ScreenWrapper(navController = navController) {
+                    com.theveloper.pixelplay.presentation.screens.DeviceCapabilitiesScreen(
+                        navController = navController,
+                        playerViewModel = playerViewModel
+                    )
+                }
+            }
+            composable(
+                Screen.NeteaseDashboard.route,
+                enterTransition = { enterTransition() },
+                exitTransition = { exitTransition() },
+                popEnterTransition = { popEnterTransition() },
+                popExitTransition = { popExitTransition() },
+            ) {
+                ScreenWrapper(navController = navController) {
+                    com.theveloper.pixelplay.presentation.netease.dashboard.NeteaseDashboardScreen(
+                        onBack = { navController.popBackStack() }
+                    )
+                }
+            }
         }
     }
 }

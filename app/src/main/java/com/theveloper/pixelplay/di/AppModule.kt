@@ -23,6 +23,7 @@ import com.theveloper.pixelplay.data.preferences.UserPreferencesRepository
 import com.theveloper.pixelplay.data.preferences.dataStore
 import com.theveloper.pixelplay.data.media.SongMetadataEditor
 import com.theveloper.pixelplay.data.network.deezer.DeezerApiService
+import com.theveloper.pixelplay.data.network.netease.NeteaseApiService
 import com.theveloper.pixelplay.data.network.lyrics.LrcLibApiService
 import com.theveloper.pixelplay.data.repository.ArtistImageRepository
 import com.theveloper.pixelplay.data.repository.LyricsRepository
@@ -59,6 +60,21 @@ object AppModule {
         return app as PixelPlayApplication
     }
 
+    @Singleton
+    @Provides
+    fun provideGson(): com.google.gson.Gson {
+        return com.google.gson.Gson()
+    }
+
+    @Singleton
+    @Provides
+    fun provideSessionToken(@ApplicationContext context: Context): androidx.media3.session.SessionToken {
+        return androidx.media3.session.SessionToken(
+            context,
+            android.content.ComponentName(context, com.theveloper.pixelplay.data.service.MusicService::class.java)
+        )
+    }
+
     @Provides
     @Singleton
     fun providePreferencesDataStore(
@@ -85,14 +101,24 @@ object AppModule {
         ).addMigrations(
             PixelPlayDatabase.MIGRATION_3_4,
             PixelPlayDatabase.MIGRATION_4_5,
+            PixelPlayDatabase.MIGRATION_5_6,
             PixelPlayDatabase.MIGRATION_6_7,
+            PixelPlayDatabase.MIGRATION_7_8,
+            PixelPlayDatabase.MIGRATION_8_9,
             PixelPlayDatabase.MIGRATION_9_10,
             PixelPlayDatabase.MIGRATION_10_11,
             PixelPlayDatabase.MIGRATION_11_12,
             PixelPlayDatabase.MIGRATION_12_13,
             PixelPlayDatabase.MIGRATION_13_14,
-            PixelPlayDatabase.MIGRATION_14_15
-        ).fallbackToDestructiveMigration(dropAllTables = true)
+            PixelPlayDatabase.MIGRATION_14_15,
+            PixelPlayDatabase.MIGRATION_15_16,
+            PixelPlayDatabase.MIGRATION_16_17,
+            PixelPlayDatabase.MIGRATION_17_18,
+            PixelPlayDatabase.MIGRATION_18_19,
+            PixelPlayDatabase.MIGRATION_19_20,
+            PixelPlayDatabase.MIGRATION_20_21
+        )
+            .fallbackToDestructiveMigration(dropAllTables = true)
             .build()
     }
 
@@ -193,6 +219,18 @@ object AppModule {
         )
     }
 
+    @Singleton
+    @Provides
+    fun provideTelegramDao(database: PixelPlayDatabase): com.theveloper.pixelplay.data.database.TelegramDao {
+        return database.telegramDao()
+    }
+
+    @Singleton
+    @Provides
+    fun provideNeteaseDao(database: PixelPlayDatabase): com.theveloper.pixelplay.data.database.NeteaseDao {
+        return database.neteaseDao()
+    }
+
     @Provides
     @Singleton
     fun provideFolderTreeBuilder(): FolderTreeBuilder {
@@ -207,6 +245,9 @@ object AppModule {
         searchHistoryDao: SearchHistoryDao,
         musicDao: MusicDao,
         lyricsRepository: LyricsRepository,
+        telegramDao: com.theveloper.pixelplay.data.database.TelegramDao,
+        telegramCacheManager: com.theveloper.pixelplay.data.telegram.TelegramCacheManager,
+        telegramRepository: com.theveloper.pixelplay.data.telegram.TelegramRepository,
         songRepository: SongRepository,
         favoritesDao: FavoritesDao,
         artistImageRepository: ArtistImageRepository,
@@ -218,11 +259,15 @@ object AppModule {
             searchHistoryDao = searchHistoryDao,
             musicDao = musicDao,
             lyricsRepository = lyricsRepository,
+            telegramDao = telegramDao,
+            telegramCacheManager = telegramCacheManager,
+            telegramRepository = telegramRepository,
             songRepository = songRepository,
             favoritesDao = favoritesDao,
             artistImageRepository = artistImageRepository,
             folderTreeBuilder = folderTreeBuilder
         )
+
     }
 
     @Provides
@@ -235,8 +280,12 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun provideSongMetadataEditor(@ApplicationContext context: Context, musicDao: MusicDao): SongMetadataEditor {
-        return SongMetadataEditor(context, musicDao)
+    fun provideSongMetadataEditor(
+        @ApplicationContext context: Context,
+        musicDao: MusicDao,
+        telegramDao: com.theveloper.pixelplay.data.database.TelegramDao
+    ): SongMetadataEditor {
+        return SongMetadataEditor(context, musicDao, telegramDao)
     }
 
     /**
@@ -414,3 +463,4 @@ object AppModule {
         return ArtistImageRepository(deezerApiService, musicDao)
     }
 }
+
