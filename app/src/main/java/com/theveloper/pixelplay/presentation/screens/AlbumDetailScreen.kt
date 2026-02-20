@@ -2,6 +2,8 @@
 
 package com.theveloper.pixelplay.presentation.screens
 
+import com.theveloper.pixelplay.presentation.navigation.navigateSafely
+
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
@@ -346,11 +348,11 @@ fun AlbumDetailScreen(
                     },
                     onDeleteFromDevice = playerViewModel::deleteFromDevice,
                     onNavigateToAlbum = {
-                        navController.navigate(Screen.AlbumDetail.createRoute(currentSong.albumId))
+                        navController.navigateSafely(Screen.AlbumDetail.createRoute(currentSong.albumId))
                         showSongInfoBottomSheet = false
                     },
                     onNavigateToArtist = {
-                        navController.navigate(Screen.ArtistDetail.createRoute(currentSong.artistId))
+                        navController.navigateSafely(Screen.ArtistDetail.createRoute(currentSong.artistId))
                         showSongInfoBottomSheet = false
                     },
                     onEditSong = { newTitle, newArtist, newAlbum, newGenre, newLyrics, newTrackNumber, coverArtUpdate ->

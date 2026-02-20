@@ -1,5 +1,7 @@
 package com.theveloper.pixelplay.presentation.screens
 
+import com.theveloper.pixelplay.presentation.navigation.navigateSafely
+
 import androidx.compose.animation.*
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.background
@@ -479,13 +481,13 @@ fun GenreDetailScreen(
                         onDeleteFromDevice = playerViewModel::deleteFromDevice,
                         onNavigateToAlbum = {
                             com.theveloper.pixelplay.presentation.navigation.Screen.AlbumDetail.createRoute(song.albumId).let { route ->
-                                navController.navigate(route)
+                                navController.navigateSafely(route)
                             }
                             showSongOptionsSheet = null
                         },
                         onNavigateToArtist = {
                             com.theveloper.pixelplay.presentation.navigation.Screen.ArtistDetail.createRoute(song.artistId).let { route ->
-                                navController.navigate(route)
+                                navController.navigateSafely(route)
                             }
                             showSongOptionsSheet = null
                         },

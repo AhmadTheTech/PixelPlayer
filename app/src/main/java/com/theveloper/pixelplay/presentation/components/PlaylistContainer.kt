@@ -1,5 +1,7 @@
 package com.theveloper.pixelplay.presentation.components
 
+import com.theveloper.pixelplay.presentation.navigation.navigateSafely
+
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -257,7 +259,7 @@ fun PlaylistItems(
                             val currentSelection = selectedPlaylists[playlist.id] ?: false
                             selectedPlaylists[playlist.id] = !currentSelection
                         } else
-                            navController?.navigate(Screen.PlaylistDetail.createRoute(playlist.id))
+                            navController?.navigateSafely(Screen.PlaylistDetail.createRoute(playlist.id))
                     }
                 }
                 PlaylistItem(

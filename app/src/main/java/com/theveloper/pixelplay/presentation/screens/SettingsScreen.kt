@@ -1,5 +1,7 @@
 package com.theveloper.pixelplay.presentation.screens
 
+import com.theveloper.pixelplay.presentation.navigation.navigateSafely
+
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.MutableTransitionState
@@ -222,7 +224,7 @@ fun SettingsScreen(
                             category = category,
                             customColors = colors,
                             onClick = {
-                                navController.navigate(Screen.SettingsCategory.createRoute(category.id))
+                                navController.navigateSafely(Screen.SettingsCategory.createRoute(category.id))
                             },
                             shape = when {
                                 mainCategories.size == 1 -> RoundedCornerShape(24.dp)
@@ -243,7 +245,7 @@ fun SettingsScreen(
                 ExpressiveCategoryItem(
                     category = SettingsCategory.EQUALIZER,
                     customColors = getCategoryColors(SettingsCategory.EQUALIZER, isDark),
-                    onClick = { navController.navigate(Screen.Equalizer.route) }, // Direct navigation
+                    onClick = { navController.navigateSafely(Screen.Equalizer.route) }, // Direct navigation
                     shape = RoundedCornerShape(24.dp)
                 )
 
@@ -253,7 +255,7 @@ fun SettingsScreen(
                 ExpressiveCategoryItem(
                     category = SettingsCategory.DEVICE_CAPABILITIES,
                     customColors = getCategoryColors(SettingsCategory.DEVICE_CAPABILITIES, isDark),
-                    onClick = { navController.navigate(Screen.DeviceCapabilities.route) },
+                    onClick = { navController.navigateSafely(Screen.DeviceCapabilities.route) },
                     shape = RoundedCornerShape(24.dp)
                 )
 
@@ -263,7 +265,7 @@ fun SettingsScreen(
                 ExpressiveCategoryItem(
                     category = SettingsCategory.ABOUT,
                     customColors = getCategoryColors(SettingsCategory.ABOUT, isDark),
-                    onClick = { navController.navigate("about") }, // Direct navigation
+                    onClick = { navController.navigateSafely("about") }, // Direct navigation
                     shape = RoundedCornerShape(24.dp)
                 )
 
