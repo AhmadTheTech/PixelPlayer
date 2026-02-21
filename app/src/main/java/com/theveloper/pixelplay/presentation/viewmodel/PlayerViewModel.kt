@@ -2501,6 +2501,13 @@ class PlayerViewModel @Inject constructor(
             }
             _isSheetVisible.value = true
 
+            // Pre-resolve the starting song's cloud URI before ExoPlayer touches it.
+            // This populates the resolvedUriCache so resolveDataSpec finds it instantly.
+            val startingUri = effectiveStartSong.contentUriString.toUri()
+            if (startingUri.scheme == "telegram" || startingUri.scheme == "netease") {
+                dualPlayerEngine.resolveCloudUri(startingUri)
+            }
+
             val playSongsAction = {
                 // Use Direct Engine Access to avoid TransactionTooLargeException on Binder
                 val enginePlayer = dualPlayerEngine.masterPlayer
