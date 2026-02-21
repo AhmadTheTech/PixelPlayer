@@ -168,6 +168,7 @@ fun FullPlayerContent(
     onQueueDrag: (Float) -> Unit,
     onQueueRelease: (Float, Float) -> Unit,
     onShowCastClicked: () -> Unit,
+    onOpenEqualizer: () -> Unit,
     onShuffleToggle: () -> Unit,
     onRepeatToggle: () -> Unit,
     onFavoriteToggle: () -> Unit
@@ -865,6 +866,29 @@ fun FullPlayerContent(
                                         }
                                     }
                                 }
+                            }
+
+                            // Queue Button
+                            Box(
+                                modifier = Modifier
+                                    .size(height = 42.dp, width = 50.dp)
+                                    .clip(
+                                        RoundedCornerShape(
+                                            topStart = 6.dp,
+                                            topEnd = 6.dp,
+                                            bottomStart = 6.dp,
+                                            bottomEnd = 6.dp
+                                        )
+                                    )
+                                    .background(playerOnAccentColor.copy(alpha = 0.7f))
+                                    .clickable(onClick = onOpenEqualizer),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                Icon(
+                                    painter = painterResource(R.drawable.rounded_settings_24),
+                                    contentDescription = "Equalizer",
+                                    tint = playerAccentColor
+                                )
                             }
 
                             // Queue Button

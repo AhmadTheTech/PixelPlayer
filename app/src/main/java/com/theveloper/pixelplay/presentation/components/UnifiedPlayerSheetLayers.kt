@@ -32,6 +32,8 @@ import com.theveloper.pixelplay.data.model.Song
 import com.theveloper.pixelplay.data.preferences.FullPlayerLoadingTweaks
 import com.theveloper.pixelplay.presentation.components.player.FullPlayerContent
 import com.theveloper.pixelplay.presentation.components.scoped.rememberFullPlayerRuntimePolicy
+import com.theveloper.pixelplay.presentation.navigation.Screen
+import com.theveloper.pixelplay.presentation.navigation.navigateSafely
 import com.theveloper.pixelplay.presentation.viewmodel.PlayerSheetState
 import com.theveloper.pixelplay.presentation.viewmodel.PlayerViewModel
 import com.theveloper.pixelplay.presentation.viewmodel.StablePlayerState
@@ -175,6 +177,9 @@ internal fun BoxScope.UnifiedPlayerMiniAndFullLayers(
                     }
                     val onRepeatToggle = remember(playerViewModel) { playerViewModel::cycleRepeatMode }
                     val onFavoriteToggle = remember(playerViewModel) { playerViewModel::toggleFavorite }
+                    val onOpenEqualizer = remember(playerViewModel) {
+                        { playerViewModel.navController?.navigateSafely(Screen.Equalizer.route) }
+                    }
 
                     FullPlayerContent(
                         currentSong = currentSongNonNull,
@@ -208,6 +213,7 @@ internal fun BoxScope.UnifiedPlayerMiniAndFullLayers(
                         onQueueDrag = onQueueDrag,
                         onQueueRelease = onQueueRelease,
                         onShowCastClicked = onShowCastClicked,
+                        onOpenEqualizer = onOpenEqualizer,
                         onShuffleToggle = onShuffleToggle,
                         onRepeatToggle = onRepeatToggle,
                         onFavoriteToggle = onFavoriteToggle
@@ -281,6 +287,7 @@ internal fun UnifiedPlayerPrewarmLayer(
                     onPrevious = playerViewModel::previousSong,
                     onCollapse = {},
                     onShowCastClicked = {},
+                    onOpenEqualizer = {},
                     onShuffleToggle = { playerViewModel.toggleShuffle() },
                     onRepeatToggle = playerViewModel::cycleRepeatMode,
                     onFavoriteToggle = playerViewModel::toggleFavorite
