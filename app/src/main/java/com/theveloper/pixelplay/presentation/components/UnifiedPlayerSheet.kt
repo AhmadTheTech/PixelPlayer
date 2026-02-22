@@ -88,6 +88,7 @@ import androidx.compose.ui.window.DialogProperties
 import androidx.compose.ui.zIndex
 import androidx.media3.common.util.UnstableApi
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.navigate
 import coil.size.Size
 import com.theveloper.pixelplay.R
 import com.theveloper.pixelplay.data.model.Song
@@ -109,6 +110,7 @@ import com.theveloper.pixelplay.presentation.components.scoped.rememberSheetActi
 import com.theveloper.pixelplay.presentation.components.scoped.rememberSheetThemeState
 import com.theveloper.pixelplay.presentation.components.scoped.rememberSheetVisualState
 import com.theveloper.pixelplay.presentation.components.scoped.SheetMotionController
+import com.theveloper.pixelplay.presentation.navigation.Screen
 import com.theveloper.pixelplay.presentation.viewmodel.PlayerSheetState
 import com.theveloper.pixelplay.presentation.viewmodel.PlayerViewModel
 import com.theveloper.pixelplay.presentation.viewmodel.StablePlayerState
@@ -618,7 +620,12 @@ fun UnifiedPlayerSheet(
                                 onQueueDragStart = sheetActionHandlers.beginQueueDrag,
                                 onQueueDrag = sheetActionHandlers.dragQueueBy,
                                 onQueueRelease = sheetActionHandlers.endQueueDrag,
-                                onShowCastClicked = castSheetState.openCastSheet
+                                onShowCastClicked = castSheetState.openCastSheet,
+                                onOpenEqualizerClicked = {
+                                    navController.navigate(Screen.Equalizer.route) {
+                                        launchSingleTop = true
+                                    }
+                                }
                             )
                         }
                     }
