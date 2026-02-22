@@ -59,7 +59,7 @@ import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.material3.pulltorefresh.PullToRefreshDefaults
 import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -252,7 +252,7 @@ fun PlaylistItems(
     onPlaylistLongPress: (Playlist) -> Unit = {},
     onPlaylistSelectionToggle: (Playlist) -> Unit = {}
 ) {
-    val stablePlayerState by playerViewModel.stablePlayerState.collectAsState()
+    val stablePlayerState by playerViewModel.stablePlayerState.collectAsStateWithLifecycle()
     val listState = rememberLazyListState()
 
     androidx.compose.runtime.LaunchedEffect(filteredPlaylists) {
@@ -350,7 +350,7 @@ fun PlaylistItem(
     onLongPress: () -> Unit = {},
     onPlaylistSelectionToggle: () -> Unit = {}
 ) {
-    val allSongs by playerViewModel.allSongsFlow.collectAsState()
+    val allSongs by playerViewModel.allSongsFlow.collectAsStateWithLifecycle()
     val playlistSongs = remember(playlist.songIds, allSongs) {
         allSongs.filter { it.id in playlist.songIds }
     }
