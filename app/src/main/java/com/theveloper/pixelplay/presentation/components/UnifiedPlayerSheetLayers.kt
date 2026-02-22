@@ -32,8 +32,6 @@ import com.theveloper.pixelplay.data.model.Song
 import com.theveloper.pixelplay.data.preferences.FullPlayerLoadingTweaks
 import com.theveloper.pixelplay.presentation.components.player.FullPlayerContent
 import com.theveloper.pixelplay.presentation.components.scoped.rememberFullPlayerRuntimePolicy
-import com.theveloper.pixelplay.presentation.navigation.Screen
-import com.theveloper.pixelplay.presentation.navigation.navigateSafely
 import com.theveloper.pixelplay.presentation.viewmodel.PlayerSheetState
 import com.theveloper.pixelplay.presentation.viewmodel.PlayerViewModel
 import com.theveloper.pixelplay.presentation.viewmodel.StablePlayerState
@@ -68,7 +66,8 @@ internal fun BoxScope.UnifiedPlayerMiniAndFullLayers(
     onQueueDragStart: () -> Unit,
     onQueueDrag: (Float) -> Unit,
     onQueueRelease: (Float, Float) -> Unit,
-    onShowCastClicked: () -> Unit
+    onShowCastClicked: () -> Unit,
+    onOpenEqualizerClicked: () -> Unit
 ) {
     currentSong?.let { currentSongNonNull ->
         miniPlayerScheme?.let { readyScheme ->
@@ -177,9 +176,7 @@ internal fun BoxScope.UnifiedPlayerMiniAndFullLayers(
                     }
                     val onRepeatToggle = remember(playerViewModel) { playerViewModel::cycleRepeatMode }
                     val onFavoriteToggle = remember(playerViewModel) { playerViewModel::toggleFavorite }
-                    val onOpenEqualizer = remember(playerViewModel) {
-                        { playerViewModel.navController?.navigateSafely(Screen.Equalizer.route) }
-                    }
+                    val onOpenEqualizer = rememberUpdatedState(onOpenEqualizerClicked)
 
                     FullPlayerContent(
                         currentSong = currentSongNonNull,
@@ -213,7 +210,7 @@ internal fun BoxScope.UnifiedPlayerMiniAndFullLayers(
                         onQueueDrag = onQueueDrag,
                         onQueueRelease = onQueueRelease,
                         onShowCastClicked = onShowCastClicked,
-                        onOpenEqualizer = onOpenEqualizer,
+                        onOpenEqualizer = onOpenEqualizer.value,
                         onShuffleToggle = onShuffleToggle,
                         onRepeatToggle = onRepeatToggle,
                         onFavoriteToggle = onFavoriteToggle

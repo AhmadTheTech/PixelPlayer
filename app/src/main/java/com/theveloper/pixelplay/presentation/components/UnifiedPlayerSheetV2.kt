@@ -69,6 +69,8 @@ import com.theveloper.pixelplay.presentation.components.scoped.rememberSheetModa
 import com.theveloper.pixelplay.presentation.components.scoped.rememberSheetOverlayState
 import com.theveloper.pixelplay.presentation.components.scoped.rememberSheetThemeState
 import com.theveloper.pixelplay.presentation.components.scoped.rememberSheetVisualState
+import com.theveloper.pixelplay.presentation.navigation.Screen
+import com.theveloper.pixelplay.presentation.navigation.navigateSafely
 import com.theveloper.pixelplay.presentation.viewmodel.PlayerSheetState
 import com.theveloper.pixelplay.presentation.viewmodel.PlayerViewModel
 import com.theveloper.pixelplay.presentation.viewmodel.StablePlayerState
@@ -594,7 +596,10 @@ fun UnifiedPlayerSheetV2(
                             onQueueDragStart = sheetActionHandlers.beginQueueDrag,
                             onQueueDrag = sheetActionHandlers.dragQueueBy,
                             onQueueRelease = sheetActionHandlers.endQueueDrag,
-                            onShowCastClicked = castSheetState.openCastSheet
+                            onShowCastClicked = castSheetState.openCastSheet,
+                            onOpenEqualizerClicked = {
+                                navController.navigateSafely(Screen.Equalizer.route)
+                            }
                         )
                     }
                 }
