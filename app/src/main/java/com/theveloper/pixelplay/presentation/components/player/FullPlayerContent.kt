@@ -885,7 +885,7 @@ fun FullPlayerContent(
                                 contentAlignment = Alignment.Center
                             ) {
                                 Icon(
-                                    painter = painterResource(R.drawable.rounded_settings_24),
+                                    painter = painterResource(R.drawable.rounded_surround_sound_24),
                                     contentDescription = "Equalizer",
                                     tint = playerAccentColor
                                 )
