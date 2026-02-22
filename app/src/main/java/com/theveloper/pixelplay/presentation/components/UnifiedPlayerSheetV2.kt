@@ -49,6 +49,7 @@ import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.media3.common.util.UnstableApi
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.navigate
 import com.theveloper.pixelplay.data.model.Song
 import com.theveloper.pixelplay.presentation.components.scoped.PlayerArtistNavigationEffect
 import com.theveloper.pixelplay.presentation.components.scoped.PlayerSheetPredictiveBackHandler
@@ -69,6 +70,7 @@ import com.theveloper.pixelplay.presentation.components.scoped.rememberSheetModa
 import com.theveloper.pixelplay.presentation.components.scoped.rememberSheetOverlayState
 import com.theveloper.pixelplay.presentation.components.scoped.rememberSheetThemeState
 import com.theveloper.pixelplay.presentation.components.scoped.rememberSheetVisualState
+import com.theveloper.pixelplay.presentation.navigation.Screen
 import com.theveloper.pixelplay.presentation.viewmodel.PlayerSheetState
 import com.theveloper.pixelplay.presentation.viewmodel.PlayerViewModel
 import com.theveloper.pixelplay.presentation.viewmodel.StablePlayerState
@@ -594,7 +596,12 @@ fun UnifiedPlayerSheetV2(
                             onQueueDragStart = sheetActionHandlers.beginQueueDrag,
                             onQueueDrag = sheetActionHandlers.dragQueueBy,
                             onQueueRelease = sheetActionHandlers.endQueueDrag,
-                            onShowCastClicked = castSheetState.openCastSheet
+                            onShowCastClicked = castSheetState.openCastSheet,
+                            onOpenEqualizerClicked = {
+                                navController.navigate(Screen.Equalizer.route) {
+                                    launchSingleTop = true
+                                }
+                            }
                         )
                     }
                 }
